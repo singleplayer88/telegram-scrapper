@@ -69,12 +69,12 @@ def download(channel, post_start, file_to):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description='Downloads posts from a telegram channel to an html file.')
+        description='Downloads all the posts from a telegram channel to an html file.')
     parser.add_argument('channel', type=str, help='name of the cannel')
     parser.add_argument('-i', type=int, metavar='post_id', required=False,
                         dest='from_post', default=0, help='copy from this post')
     parser.add_argument('-f', type=argparse.FileType('w'), metavar='file',
-                        required=False, dest='file', help='Output file')
+                        required=False, dest='file', help='output file')
     args = parser.parse_args()
 
     channel = args.channel
