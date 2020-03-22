@@ -49,7 +49,7 @@ def download(channel, post_start, file_to):
                 header_set = True
 
             for item in soup.find_all('div', {"class": "tgme_widget_message"}):
-                file_to.write(str(item))
+                file_to.write(str(item).replace("data-view", "d-v"))
                 errors = 0
         else:
             errors += 1
