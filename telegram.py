@@ -60,20 +60,21 @@ def download(channel, post_start, file_to):
                 links = []
                 for link in item.find_all('a', {"class": "tgme_widget_message_link_preview"}):
                     img_link = link['href']
-                    background_img = link.i['style']
-                    r = re.search('\'.*\'', background_img)
-                    background_img_link = r.group(0)
+                    if ".jpg" in img_link and "telegra.ph" in img_link:
+                        background_img = link.i['style']
+                        r = re.search('\'.*\'', background_img)
+                        background_img_link = r.group(0)
 
-                    # save image to the disk
-                    img_request = requests.get(img_link)
-                    img_bytearray = bytearray(img_request.content)
-                    img_file_name = img_link[img_link.find('file/') + len('file/'):]
-                    with open(os.path.join(img_dir_name, img_file_name), "wb") as img_file:
-                        img_file.write(img_bytearray)
+                        # save image to the disk
+                        img_request = requests.get(img_link)
+                        img_bytearray = bytearray(img_request.content)
+                        img_file_name = img_link[img_link.find('file/') + len('file/'):]
+                        with open(os.path.join(img_dir_name, img_file_name), "wb") as img_file:
+                            img_file.write(img_bytearray)
 
-                    img_link_on_disk = "file:///" + os.path.abspath(os.path.join(img_dir_name, img_file_name))
-                    links.append((img_link, img_link_on_disk))
-                    links.append((background_img_link, "'{}'".format(img_link_on_disk)))
+                        img_link_on_disk = "file:///" + os.path.abspath(os.path.join(img_dir_name, img_file_name))
+                        links.append((img_link, img_link_on_disk))
+                        links.append((background_img_link, "'{}'".format(img_link_on_disk)))
 
                 # replace all img links with local links
                 div_html=str(item)
